@@ -7,11 +7,11 @@ services:
       context: .
       dockerfile: src/TelegramBotToWordPress/Dockerfile
     environment:
-      wp-baseurl:*****************
-      wp-blogid:1
-      wp-username:*********
-      wp-password:*****************
-      wp-parentid:37292
-      wp-author:1
-      bot-apikey:'*****************'
+      wp-baseurl: 123
+      wp-blogid: 1
+      wp-username: 123
+      wp-password: 123
+      wp-parentid: 37292
+      wp-author: 1
+      bot-apikey: 123
 

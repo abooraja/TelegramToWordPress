@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  telegrambot-to-wordpress:
+    image: ${DOCKER_REGISTRY-}telegrambot-to-wordpress
+    build:
+      context: .
+      dockerfile: src/TelegramBotToWordPress/Dockerfile
+    environment:
+      wp-baseurl:https://:*****************.ir
+      wp-blogid:1
+      wp-username:xamarinAdmin
+      wp-password:*****************
+      wp-parentid:37292
+      wp-author:1
+      bot-apikey:':*****************'
+

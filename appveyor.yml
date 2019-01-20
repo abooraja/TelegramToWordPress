@@ -1,0 +1,46 @@
+version: '1.0.0.{build}'
+image: ubuntu
+services:
+- docker
+environment:
+  DOCKER_USER:
+    secure: Lwz+amG722xWRiGu0ev6MGVxQFhokC6PiVBtnO1fzQI=
+  DOCKER_PASS:
+    secure: con8TCKYa9l0kpjh0FareQ==
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+
+init:
+  # Good practise, because Windows line endings are different from Unix/Linux ones
+  #- ps: git config --global core.autocrlf true
+    # Display .NET Core version
+  - ps: dotnet --version
+  # Display Docker version
+  #- ps: docker version
+  - sh: sudo curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  - sh: sudo chmod +x /usr/local/bin/docker-compose
+  - ps: docker-compose --version
+  
+before_build:
+  - ps: dotnet restore TelegramToWordPress.sln -v m 
+build_script:
+  - ps: dotnet build TelegramToWordPress.sln -v m -c Release
+  # create image
+  - ps: docker-compose build
+
+before_test:
+  #- ps: docker-compose up -d
+test_script:
+  - cmd: dotnet test -v m
+
+deploy_script:
+  # tag image and push to docker hub
+  - ps: docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
+  - ps: docker tag telegrambot-to-wordpress  abolfazlrajabpour/telegrambot-to-wordpress:latest
+  - ps: docker push abolfazlrajabpour/telegrambot-to-wordpress:latest

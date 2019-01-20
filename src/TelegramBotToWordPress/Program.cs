@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Microsoft.Extensions.Configuration;
 using Telegram.Bot;
 using Telegram.Bot.Args;
@@ -10,6 +11,7 @@ namespace TelegramBotToWordPress
 {
     class Program
     {
+        private static readonly AutoResetEvent WaitHandle = new AutoResetEvent(false);
         private static TelegramBotClient _bot;
         private static ISimpleWordPressClient _simpleWordPressClient;
         static void Main(string[] args)
@@ -46,7 +48,10 @@ namespace TelegramBotToWordPress
 
             _bot.StartReceiving(Array.Empty<UpdateType>());
             Console.Out.WriteLine($"Start listening for @{me.Username}");
-            Console.ReadLine();
+
+
+            // Wait
+            WaitHandle.WaitOne();
             _bot.StopReceiving();
         }
 

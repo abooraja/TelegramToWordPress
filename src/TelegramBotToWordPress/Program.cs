@@ -40,7 +40,7 @@ namespace TelegramBotToWordPress
 
             var me = _bot.GetMeAsync().Result;
             _bot.OnMessage += BotOnMessageReceived;
-            _bot.OnMessageEdited += BotOnMessageReceived;
+            //_bot.OnMessageEdited += BotOnMessageReceived;
             //Bot.OnCallbackQuery += BotOnCallbackQueryReceived;
             //Bot.OnInlineQuery += BotOnInlineQueryReceived;
             //Bot.OnInlineResultChosen += BotOnChosenInlineResultReceived;
@@ -59,7 +59,9 @@ namespace TelegramBotToWordPress
         {
             var message = messageEventArgs.Message;
             if (message == null || message.Type != MessageType.Text || message.ForwardFromChat != null) return;
-            var id = await _simpleWordPressClient.SendForumPost(message.Text);
+            var writer = $"{message.From.FirstName} {message.From.LastName} {message.From.Username}";
+            var postText = $"{message.Text}{Environment.NewLine}{writer}";
+            var id = await _simpleWordPressClient.SendForumPost(postText);
             Console.Out.WriteLine(id);
         }
 

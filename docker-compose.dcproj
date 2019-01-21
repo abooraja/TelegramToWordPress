@@ -5,6 +5,9 @@
     <DockerTargetOS>Linux</DockerTargetOS>
     <ProjectGuid>61a5fe58-eabb-4229-b668-e7078b518c33</ProjectGuid>
   </PropertyGroup>
+  <PropertyGroup>
+    <DockerServiceName>telegrambot-to-wordpress</DockerServiceName>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>

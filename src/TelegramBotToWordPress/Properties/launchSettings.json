@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TelegramBotToWordPress": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
